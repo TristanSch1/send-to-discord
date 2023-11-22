@@ -1,9 +1,14 @@
 import { Client } from "discord.js";
 import ready from "./listeners/ready";
+import interactionCreate from "./listeners/interactionCreate";
+import "dotenv/config";
 
-const TOKEN =
-  "MTE3NjgxMzMyMjQ0ODk0MTA2Ng.G8MX6q.Iv2IOxl9hoC9kq0rrXhdfXUVgVBS9xtm1Lj4HI";
+const TOKEN = process.env.BOT_TOKEN;
 
+if (!TOKEN) {
+  console.error("Missing BOT_TOKEN environment variable");
+  process.exit(1);
+}
 console.log("Bot is starting...");
 
 const client = new Client({
@@ -11,6 +16,7 @@ const client = new Client({
 });
 
 ready(client);
+interactionCreate(client);
 
 void client.login(TOKEN);
 
